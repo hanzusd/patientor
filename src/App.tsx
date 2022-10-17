@@ -7,6 +7,8 @@ import { apiBaseUrl } from "./constants";
 import { useStateValue } from "./state";
 import { Patient } from "./types";
 
+import { setPatientList } from "./state/reducer";
+
 import PatientListPage from "./PatientListPage";
 import SinglePatientPage from "./SinglePatientPage";
 import { Typography } from "@material-ui/core";
@@ -22,7 +24,7 @@ const App = () => {
           `${apiBaseUrl}/patients`
         );
         console.log('setting patients');
-        dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+        dispatch(setPatientList(patientListFromApi));
       } catch (e) {
         console.error(e);
       }

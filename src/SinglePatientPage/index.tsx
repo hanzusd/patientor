@@ -5,6 +5,8 @@ import { apiBaseUrl } from "../constants";
 import { useStateValue } from "../state";
 import { Patient } from "../types";
 
+import { updatePatient } from "../state/reducer";
+
 const SinglePatientPage = ( ) => {
     const [{ patients }, dispatch] = useStateValue();
 
@@ -24,7 +26,7 @@ const SinglePatientPage = ( ) => {
             const { data: patientFromApi } = await axios.get<Patient>(
               `${apiBaseUrl}/patients/${id}`
             );
-            dispatch({ type: "UPDATE_PATIENT", payload: patientFromApi });
+            dispatch(updatePatient(patientFromApi));
           } catch (e) {
             console.error(e);
           }
