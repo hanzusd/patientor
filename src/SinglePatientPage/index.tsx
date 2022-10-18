@@ -60,7 +60,7 @@ const SinglePatientPage = ( ) => {
         return(entries.map(e =>
           <div key={e.id} style={{marginBottom: "1rem"}}>
             <div >{e.date} <i>{e.description}</i></div>
-            <div>{printDiagnoses(e)}</div>
+            <div style={{marginTop: "1rem", marginLeft: "1rem"}}>{printDiagnoses(e)}</div>
           </div>));
           };
 
@@ -77,7 +77,7 @@ const SinglePatientPage = ( ) => {
             <div>ssn: {patient.ssn}</div>
             <div style={{marginBottom: "1rem"}}>occupation: {patient.occupation}</div>
             <div style={{fontWeight:"bold", fontSize:25}}>entries</div>
-            <div style={{marginTop: "1rem", marginLeft: "1rem"}}>{getEntries(patient.entries)}</div>
+            <div style={{marginTop: "1rem"}}>{getEntries(patient.entries)}</div>
         </div>);
 };
 
