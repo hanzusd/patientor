@@ -3,7 +3,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { apiBaseUrl } from "../constants";
 import { useStateValue } from "../state";
-import { Patient } from "../types";
+import { Patient, Entry } from "../types";
 
 import { updatePatient } from "../state/reducer";
 
@@ -34,28 +34,50 @@ const SinglePatientPage = ( ) => {
         if (!patient || !patient.ssn) {
             void fetchPatient();
         }
-      }, [patient, dispatch]);
+    }, [patient, dispatch]);
 
     if (!patient) {
         return null;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     let genderIcon = "\u2640";
     if (patient.gender === "male") {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         genderIcon = "\u2642";
     }
     if (patient.gender === "other") {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         genderIcon = "\u26A5";
     }
 
+    const getEntries = (entries:Array<Entry>) => {
+      
+      const printDiagnoses = (entry:Entry) => {
+        if(entry.diagnosisCodes!==undefined) {
+          return (entry.diagnosisCodes.map(d => <li key={d}>{d}</li>));
+        }
+      };
+
+      const printEntry = (entries:Array<Entry>) => {
+        return(entries.map(e =>
+          <div key={e.id} style={{marginBottom: "1rem"}}>
+            <div >{e.date} <i>{e.description}</i></div>
+            <div>{printDiagnoses(e)}</div>
+          </div>));
+          };
+
+
+      return (
+      <div>
+        {printEntry(entries)}
+      </div>);
+    };
+
     return(
-        <div>
-            <h2><div style= {{fontSize:36}}>{patient.name}{genderIcon}</div></h2>
-            <div style= {{fontSize:21}}>ssn: {patient.ssn}</div>
-            <div style= {{fontSize:21}}>occupation: {patient.occupation}</div>
+        <div style= {{fontSize:21}}>
+            <h2 style= {{fontSize:36}}>{patient.name}{genderIcon}</h2>
+            <div>ssn: {patient.ssn}</div>
+            <div style={{marginBottom: "1rem"}}>occupation: {patient.occupation}</div>
+            <div style={{fontWeight:"bold", fontSize:25}}>entries</div>
+            <div style={{marginTop: "1rem", marginLeft: "1rem"}}>{getEntries(patient.entries)}</div>
         </div>);
 };
 
