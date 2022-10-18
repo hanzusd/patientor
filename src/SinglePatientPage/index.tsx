@@ -8,7 +8,7 @@ import { Patient, Entry } from "../types";
 import { updatePatient } from "../state/reducer";
 
 const SinglePatientPage = ( ) => {
-    const [{ patients }, dispatch] = useStateValue();
+    const [{ patients, diagnoses }, dispatch] = useStateValue();
 
     const { id } = useParams<{ id: string }>();
 
@@ -16,9 +16,6 @@ const SinglePatientPage = ( ) => {
         throw new Error ("No id");
     }
     const patient = patients[id];
-
-    console.log('rendering', patient);
-    console.log('patients', patients);
 
     React.useEffect(() => {
         const fetchPatient = async () => {
@@ -51,8 +48,14 @@ const SinglePatientPage = ( ) => {
     const getEntries = (entries:Array<Entry>) => {
       
       const printDiagnoses = (entry:Entry) => {
-        if(entry.diagnosisCodes!==undefined) {
-          return (entry.diagnosisCodes.map(d => <li key={d}>{d}</li>));
+        if (entry.diagnosisCodes!==undefined) {
+          return (entry.diagnosisCodes.map(d => {
+            let rtrn = d;
+            if (diagnoses[d]) {
+              rtrn = d + " " + diagnoses[d].name;
+            }
+            return (<li key={d}>{rtrn}</li>);
+          }));
         }
       };
 
