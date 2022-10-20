@@ -7,7 +7,7 @@ import {
   TextField as TextFieldMUI,
   Typography,
 } from "@material-ui/core";
-import { Diagnosis, Gender } from "../types";
+import { Diagnosis, Gender, HealthCheckRating } from "../types";
 import { InputLabel } from "@material-ui/core";
 import Input from '@material-ui/core/Input';
 
@@ -15,6 +15,15 @@ import Input from '@material-ui/core/Input';
 export type GenderOption = {
   value: Gender;
   label: string;
+};
+
+export type TypeOption = {
+  label: string;
+};
+
+export type HealthCheckRatingOption = {
+  label: string;
+  value: HealthCheckRating;
 };
 
 // props for select field component
@@ -39,6 +48,57 @@ export const SelectField = ({ name, label, options }: SelectFieldProps) => (
       {options.map((option) => (
         <MenuItem key={option.value} value={option.value}>
           {option.label || option.value}
+        </MenuItem>
+      ))}
+    </Field>
+  </>
+);
+
+// props for select field component
+type SelectFieldPropsHealthCheck = {
+  name: string;
+  label: string;
+  options: HealthCheckRatingOption[];
+};
+export const SelectFieldHealthCheck = ({ name, label, options }: SelectFieldPropsHealthCheck) => (
+  <>
+    <InputLabel>{label}</InputLabel>
+    <Field
+      fullWidth
+      style={{ marginBottom: "0.5em" }}
+      label={label}
+      component={FormikSelect}
+      name={name}
+    >
+      {options.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label || option.value}
+        </MenuItem>
+      ))}
+    </Field>
+  </>
+);
+
+// props for select field component for type
+type SelectFieldPropsType = {
+  name: string;
+  label: string;
+  options: TypeOption[];
+};
+
+export const SelectFieldType = ({ name, label, options }: SelectFieldPropsType) => (
+  <>
+    <InputLabel>{label}</InputLabel>
+    <Field
+      fullWidth
+      style={{ marginBottom: "0.5em" }}
+      label={label}
+      component={FormikSelect}
+      name={name}
+    >
+      {options.map((option) => (
+        <MenuItem key={option.label} value={option.label}>
+          {option.label}
         </MenuItem>
       ))}
     </Field>

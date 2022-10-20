@@ -83,7 +83,6 @@ export const reducer = (state: State, action: Action): State => {
             ...state.diagnoses
           }
         };
-      break;
     default:
       return state;
   }
